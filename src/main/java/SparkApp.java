@@ -4,7 +4,7 @@ public class SparkApp {
     public static void main(String[] args) {
         port(getPort());
 
-        secure("keystores/ecikeystore.p12", "123456", null, null);
+        secure(getKeyStore(), "123456", null, null);
 
         get("/hello", (req, res) -> "Hello Service");
     }
@@ -14,6 +14,13 @@ public class SparkApp {
             return Integer.parseInt(System.getenv("PORT"));
         }
         return 5000;
+    }
+
+    private static String getKeyStore(){
+        if (System.getenv("KEYSTORE") != null){
+            return System.getenv("KEYSTORE");
+        }
+        return "keystores/ecikeystore.p12";
     }
 
 }
